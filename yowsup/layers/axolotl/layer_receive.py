@@ -230,7 +230,7 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
         mediaNode = ProtocolTreeNode("media", {
             "type": "image",
             "filehash": "",
-            "size": "",
+            "size": "0",
             "url": "",
             "mimetype": "",
             "width": "",
