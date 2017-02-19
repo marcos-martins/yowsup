@@ -208,6 +208,7 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
         if not handled:
             print('Tratamento para este tipo de mensagem não suportado.')
             print(m)
+            self.handleVoiceMessage(node, "Mensagem de voz não implementado.")
             # raise ValueError("Unhandled")
 
     def handleSenderKeyDistributionMessage(self, senderKeyDistributionMessage, axolotlAddress):
@@ -218,6 +219,13 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
         groupSessionBuilder.process(senderKeyName, axolotlSenderKeyDistributionMessage)
 
     def handleConversationMessage(self, originalEncNode, text):
+        messageNode = copy.deepcopy(originalEncNode)
+        messageNode["type"] = "media"
+        messageNode.children = []
+        messageNode.addChild(ProtocolTreeNode("body", data = text))
+        self.toUpper(messageNode)
+
+    def handleVoiceMessage(self, originalEncNode, text):
         messageNode = copy.deepcopy(originalEncNode)
         messageNode.children = []
         messageNode.addChild(ProtocolTreeNode("body", data = text))
