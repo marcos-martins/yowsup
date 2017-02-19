@@ -206,6 +206,7 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
             self.handleImageMessage(node, m.image_message)
 
         if not handled:
+            print('Tratamento para este tipo de mensagem não suportado.')
             print(m)
             # raise ValueError("Unhandled")
 
