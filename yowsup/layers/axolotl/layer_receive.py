@@ -220,15 +220,28 @@ class AxolotlReceivelayer(AxolotlBaseLayer):
 
     def handleConversationMessage(self, originalEncNode, text):
         messageNode = copy.deepcopy(originalEncNode)
-        messageNode["type"] = "media"
         messageNode.children = []
         messageNode.addChild(ProtocolTreeNode("body", data = text))
         self.toUpper(messageNode)
 
     def handleVoiceMessage(self, originalEncNode, text):
         messageNode = copy.deepcopy(originalEncNode)
-        messageNode.children = []
-        messageNode.addChild(ProtocolTreeNode("body", data = text))
+        messageNode["type"] = "media"
+        mediaNode = ProtocolTreeNode("media", {
+            "type": "image",
+            "filehash": "",
+            "size": "",
+            "url": "",
+            "mimetype": "",
+            "width": "",
+            "height": "",
+            "caption": "",
+            "encoding": "raw",
+            "file": "enc",
+            "ip": "0"
+        }, data = text)
+        messageNode.addChild(mediaNode)
+
         self.toUpper(messageNode)
 
     def handleImageMessage(self, originalEncNode, imageMessage):
